@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                echo 'Fetching code from GitHub...'
+                checkout scm
+            }
+        }
+
+        stage('Test Student Registration Form') {
+            steps {
+                echo 'Running automated tests...'
+                bat 'python -m unittest -v test_form.py'
+            }
+        }
+
+    }
+
+    post {
+        success {
+            echo 'SUCCESS: All registration form tests passed!'
+        }
+
+        failure {
+            echo 'FAILURE: Check the test results.'
+        }
+    }
+}
